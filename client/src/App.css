@@ -237,6 +237,12 @@ img.inventoryImg {
     width: 150px;
   }
 
+  footer {
+
+    position: inherit;
+
+  }
+
 
 
 }
