@@ -39,7 +39,7 @@ const Nav = (props) => {
                 <li className={props.activeModule === "purchaseHistory" ? "nav-item active" : "nav-item"}>
                     <a className="nav-link" href="#" onClick={() => toggleMobileNav("purchaseHistory")}>Your Purchases & Reviews</a>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item desktopOnly">
                     <a className="nav-link" href="#" onClick={() => window.print()}>Print Page Info <i className="fas fa-print"></i></a>
                 </li>
 
