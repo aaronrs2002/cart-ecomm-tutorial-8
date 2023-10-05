@@ -222,32 +222,29 @@ const Inventory = (props) => {
                     let tempMonths = [];
                     let tempSoldQtys = [];
                     let tempTotal = 0;
+
+                    //BUILD THE MONTH LIST AND SORT IT FIRST, THEN APPLY VALUES TO THE INDEX AFTER THE DATES ARE IN ORDER
                     for (let i = 0; i < res.data.length; i++) {
-
-                        //aaron@test.com:2023-09-14T10:18:05
                         let theMonth = res.data[i].saleId.substring(res.data[i].saleId.indexOf(":") + 1, res.data[i].saleId.indexOf(":") + 8);
-                        if (tempMonths.indexOf(theMonth) !== -1) {
-                            tempSoldQtys[tempMonths.indexOf(theMonth)] = 1 + tempSoldQtys[tempMonths.indexOf(theMonth)];
-                            tempTotal = tempTotal + 1;
-
-                        } else {
+                        if (tempMonths.indexOf(theMonth) === -1) {
                             tempMonths.push(theMonth);
-                            tempSoldQtys.push(1);
+                            tempSoldQtys.push(0);//PLACEHOLDER TO BE ADDED TO
                         }
-                    }
 
-                    tempMonths = tempMonths.sort(((a, b) => a - b));
+                    }
+                    tempMonths = tempMonths.reverse();
+                    tempMonths = tempMonths.sort();
                     console.log("tempMonths: " + tempMonths);
+                    for (let i = 0; i < res.data.length; i++) {
+                        let theMonth = res.data[i].saleId.substring(res.data[i].saleId.indexOf(":") + 1, res.data[i].saleId.indexOf(":") + 8);
+                        tempSoldQtys[tempMonths.indexOf(theMonth)] = 1 + tempSoldQtys[tempMonths.indexOf(theMonth)];
+                        tempTotal = tempTotal + 1;
+                    }
                     setPurchaseMonths((purchaseMonths) => tempMonths);
                     setTotalPurchased((totalPurchased) => tempTotal);
                     setPurchaseQtys((purchaseQtys) => tempSoldQtys);
-
                     setPurchaseLog((purchaseLog) => res.data);
-
                     grabOrders(props.selectionObj.itemName, tempMonths);
-
-
-
                 }, (error) => {
                     props.showAlert("That did not work.", "danger");
                 }
