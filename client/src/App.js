@@ -43,7 +43,7 @@ function App() {
   const config = {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("token")}`
+      Authorization: `Bearer ${token}`
     }
   }
 
@@ -132,11 +132,18 @@ function App() {
     sessionStorage.setItem("cartList", JSON.stringify(tempCart));
   }
 
-  const obtainUserPurchases = (passEmail) => {
+  const obtainUserPurchases = (passEmail, passToken) => {
     //determin if user has bought this item
     //START CLIENT SIDE GET PURCHASE LOG DATA BASE ON TIME SELECTED
 
-    axios.get("/api/purchaseLog/ordersFromUser/" + passEmail, config).then(
+    const configObj = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${passToken}`
+      }
+    }
+
+    axios.get("/api/purchaseLog/ordersFromUser/" + passEmail, configObj).then(
       (res) => {
 
         setUserPurchases((userPurchases) => res.data);
@@ -227,7 +234,7 @@ function App() {
       setCheckedToken((setCheckedToken) => true);
       setUserEmail((userEmail) => email);
       sessionStorage.setItem("email", email);
-      obtainUserPurchases(email);
+      obtainUserPurchases(email, tokenPass);
       GrabAllItems(tokenPass);
 
     } else {
