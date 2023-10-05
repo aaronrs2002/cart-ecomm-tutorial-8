@@ -10,12 +10,15 @@ const PurchaseLog = (props) => {
 
     const filter = (whichFilter) => {
         let tempUserSearch = document.querySelector("select[name='selectUser']").value;
+        if (tempUserSearch === "default") {
+            setSearch((search) => "default");
+        }
         if (whichFilter === "item") {
             document.querySelector("select[name='selectUser']").selectedIndex = 0;
             tempUserSearch = document.querySelector("[name='filterItems']").value;
 
             if (tempUserSearch === "") {
-                setSearch((search) => "default")
+                setSearch((search) => "default");
             }
 
 
@@ -58,11 +61,11 @@ const PurchaseLog = (props) => {
                     {userList.length > 0 ? userList.map((email, i) => { return <option key={i} value={email}>{email}</option> }) : null}
                 </select>
             </div>
-            <div className="col-md-12">
+            <div className="col-md-12 pb-5">
                 <ul className="list-group mb-5">
                     {props.timeSelected ?
                         props.timeSelected.map((sale, i) => {
-                            return <li key={i} className={(sale.itemName + sale.saleId).indexOf(search) !== -1 ? "list-group-item" : "hide"} ><span className="capitalize">{sale.itemName}</span>{" - $" + sale.price} <span className="badge badge-secondary">{sale.saleId}</span></li>
+                            return <li key={i} className={(sale.itemName + sale.saleId).indexOf(search) !== -1 || search === "default" ? "list-group-item" : "hide"} ><span className="capitalize">{sale.itemName}</span>{" - $" + sale.price} <span className="badge badge-secondary">{sale.saleId}</span></li>
                         })
                         : null}
                 </ul>
