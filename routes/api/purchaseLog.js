@@ -31,6 +31,8 @@ router.get("/ordersFromUser/:email", checkToken, (req, res) => {
     })
 });
 
+
+
 //SERVER SIDE GET PURCHASE FROM SPECIFIC itemName
 router.get("/ordersByName/:itemName", checkToken, (req, res) => {
     let sql = `SELECT * FROM purchaseLog WHERE itemName = '${req.params.itemName}'`;
