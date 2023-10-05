@@ -99,7 +99,6 @@ const Shop = (props) => {
                         tempName = tempName + product.searchWords.toString().toLowerCase();
 
                         if (product.reviewData !== null && (typeof product.reviewData) === "string") {
-                            console.log("product.reviewData: " + product.reviewData);
                             product.reviewData = JSON.parse(product.reviewData);
 
                         }
