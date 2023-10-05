@@ -18,7 +18,7 @@ const PurchaseHistory = (props) => {
 
     useEffect(() => {
 
-        if (loaded === false && document.querySelector(".card-body")) {
+        if (loaded === false && props.userPurchases.length > 0) {
 
             setTimeout(() => {
                 axios.get("/api/reviews/user/" + props.userEmail, props.config).then(
@@ -38,14 +38,6 @@ const PurchaseHistory = (props) => {
                                 }
                                 tempStars = tempStars + "<i  class='" + standard + "' ></i>";
                             }
-
-
-
-
-                            console.log("tempStars: " + tempStars);
-
-
-
                             [].forEach.call(document.querySelectorAll("[data-rating='" + res.data[i].itemName + "']"), (e) => {
                                 e.innerHTML = "Your gave a rating of: " + res.data[i].rating + " out of 5: " + tempStars;
                             });
@@ -67,7 +59,7 @@ const PurchaseHistory = (props) => {
 
         }
     });
-
+    console.log("JSON.stringify(props.userPurchases): " + JSON.stringify(props.userPurchases));
     return (<div className="col-md-12">
         <h2>Your Order History and Reviews</h2>
         <div className="col-md-12 py-2">
